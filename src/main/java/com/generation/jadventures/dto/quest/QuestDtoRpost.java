@@ -13,5 +13,7 @@ import lombok.experimental.SuperBuilder;
 public class QuestDtoRpost extends QuestDtoBase 
 {
     private Integer id;
-    private Integer guild_id;
+    private Integer patron_id;
+
+    
 }

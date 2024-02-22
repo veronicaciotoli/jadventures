@@ -1,5 +1,6 @@
 package com.generation.jadventures.dto.quest;
 
+import com.generation.jadventures.dto.guild.GuildRDtoBase;
 import com.generation.jadventures.model.entities.Guild;
 
 import lombok.AllArgsConstructor;
@@ -14,6 +15,6 @@ import lombok.experimental.SuperBuilder;
 public class QuestDtoWFullWithPadron extends QuestDtoBase
 {
     private Integer id;
-    private Guild padron;
+    private GuildRDtoBase patron;
 
 }
