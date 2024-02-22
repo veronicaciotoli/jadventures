@@ -58,6 +58,17 @@ public class GuildConverter
                 .build(); 
     }
 
+    public GuildRDtoBase guildtoDtoBase (Guild e)
+    {
+        return GuildRDtoBase
+                .builder()
+                .name(e.getName())
+                .seal_img_url(e.getSeal_img_url())
+                .n_employees(e.getN_employees())
+                .hq_address(e.getHq_address())
+                .build(); 
+    }
+
     
 
 }

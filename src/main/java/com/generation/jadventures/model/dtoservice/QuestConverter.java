@@ -1,10 +1,13 @@
 package com.generation.jadventures.model.dtoservice;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.generation.jadventures.dto.guild.GuildRDtoBase;
 import com.generation.jadventures.dto.quest.QuestDtoRpost;
 import com.generation.jadventures.dto.quest.QuestDtoWFull;
 import com.generation.jadventures.dto.quest.QuestDtoWFullWithPadron;
@@ -19,15 +22,18 @@ public class QuestConverter
     @Autowired
     GuildRepository gRepo;
 
+    @Autowired
+    GuildConverter gConv;
+
     public Quest dtoRpostToQuest(QuestDtoRpost dto)
     {
         Guild padre = null;
 
-        Integer guild_id = dto.getGuild_id();
+        Integer patron_id = dto.getPatron_id();
 
-        if(guild_id!=null)
+        if(patron_id!=null)
         {
-            Optional<Guild> op = gRepo.findById(guild_id);
+            Optional<Guild> op = gRepo.findById(patron_id);
 
             if(op.isPresent())
                 padre = op.get();
@@ -80,7 +86,7 @@ public class QuestConverter
                 .map_url(e.getMap_url())
                 .description(e.getDescription())
                 .type(e.getType())
-                .padron(e.getPatron())
+                .patron(gConv.guildtoDtoBase(e.getPatron()))
                 .build();
             
                 

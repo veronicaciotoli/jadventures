@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -28,15 +29,18 @@ public class Quest
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id; 
     private LocalDate date_created; 
-    private String status, rank; 
+    private String status;
+    @Column(name="`rank`")
+    private String rank; 
     private int reward;
     private String area; 
     private LocalDate date_completed;
     private String map_url, description, type; 
+    
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "guild_id")
+    @JoinColumn(name = "patron_id")
     private Guild patron;
 
 
