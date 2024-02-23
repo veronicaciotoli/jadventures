@@ -1,6 +1,7 @@
 package com.generation.jadventures.controllers;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.generation.jadventures.dto.guild.GuildDtoWFull;
+import com.generation.jadventures.dto.guild.GuildDtoWFullNoQuests;
 import com.generation.jadventures.dto.guild.GuildDtoWLogin;
 import com.generation.jadventures.model.dtoservice.GuildConverter;
 import com.generation.jadventures.model.entities.Guild;
@@ -45,19 +48,48 @@ public class GuildController
         return gConv.guildToDtoWLogin(gRepo.findById(id).get());
     }
 
-    /*@PostMapping("/guilds")
-    public Guild insertGuild(@RequestBody GuildDtoWFull dto)
-    {
-        if(dto.getAuthentication_seal().length()<8 )
-         
-        return gRepo.save(gConv.guildToDtoWFull(dto));
-    }*/
 
 
-    /*public boolean isValid()
+    @PostMapping("/guilds/login")
+    public ResponseEntity <?> login(@RequestBody GuildDtoWLogin dto)
     {
-        if()
-    }*/
+        Optional<Guild> op= gRepo.findByNameAndAuthentication_seal(dto.getName(), dto.getAuthentication_seal());
+        if(op.isPresent())
+            return new ResponseEntity<GuildDtoWFullNoQuests>(gConv.guildToDtoWFullNoQuests(op.get()), HttpStatus.OK);
+
+        else
+            return new ResponseEntity<String>("Credenziali non valide", HttpStatus.UNAUTHORIZED); 
+        
+    }
+
+
+    public boolean validAuthentication(GuildDtoWLogin dto)
+    {
+        String s= dto.getAuthentication_seal();
+        char[] array = s.toCharArray();
+
+
+        if(array.length>=8)
+        {
+            for(char c: array)
+            {
+                if( 
+                    Character.isUpperCase(c) &&
+                    Character.isLowerCase(c) && 
+                    Character.isDigit(c) && 
+                    !Character.isLetterOrDigit(c)
+                )    
+                
+                return true;                    
+                         
+
+            }
+        }
+
+        return true; 
+        
+        
+    }
   
     @PutMapping("/guilds/{id}")
     public ResponseEntity<?> update(@PathVariable Integer id,@RequestBody Guild entity) 
@@ -74,9 +106,16 @@ public class GuildController
 
 
     @DeleteMapping("/guilds/{id}")
-    public void deleteGuild(@PathVariable Integer id)
+    public ResponseEntity<?> deleteGuild(@PathVariable Integer id, @RequestBody Guild entity)
     {
-        gRepo.deleteById(id);
+        Optional<Guild> op= gRepo.findById(id);
+        if(op.isPresent())
+        {
+            return new ResponseEntity<String>("", HttpStatus.OK);
+        }
+        else 
+            return new ResponseEntity<String>("No guild with id"+id, HttpStatus.NOT_FOUND);
+
     }
 
 }
