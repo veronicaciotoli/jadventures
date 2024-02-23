@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.generation.jadventures.dto.guild.GuildDtoRput;
 import com.generation.jadventures.dto.guild.GuildDtoWFull;
-import com.generation.jadventures.dto.guild.GuildDtoWFullNoQuests;
 import com.generation.jadventures.dto.guild.GuildDtoWLogin;
 import com.generation.jadventures.model.dtoservice.GuildConverter;
 import com.generation.jadventures.model.entities.Guild;
@@ -63,22 +63,29 @@ public class GuildController
     }
     
     @PutMapping("/guilds/{id}")
-    public ResponseEntity<?> update(@PathVariable Integer id,@RequestBody Guild entity) 
+    public ResponseEntity<?> update(@PathVariable Integer id,@RequestBody GuildDtoRput dto) 
     {
-        Optional<Guild> op = gRepo.findLogged(entity.getName(), entity.getAuthentication_seal());
-        if(op.isPresent())
+        Optional<Guild> op = gRepo.findById(id);
+        if (!op.isPresent()) 
         {
-            entity.setId(id);
-            return new ResponseEntity<Guild>(gRepo.save(entity),HttpStatus.OK);
+            return new ResponseEntity<String>("No guild with id " + id, HttpStatus.NOT_FOUND);
         }
-        else
-            return new ResponseEntity<String>("No guild with id "+id,HttpStatus.NOT_FOUND);
+     
+        if (!validAuthentication(dto.getAuthentication_seal())) {
+            return new ResponseEntity<String>("Invalid authentication", HttpStatus.BAD_REQUEST);
+        }
+
+        Guild newVersion = gConv.dtoRPut(dto);
+
+        gRepo.save(newVersion);
+
+        return new ResponseEntity<String>("Guild modificato ",HttpStatus.OK);
     }
     
-    public boolean validAuthentication(GuildDtoWLogin dto)
+    public boolean validAuthentication(String authentication_seal )
     {
-        String s= dto.getAuthentication_seal();
-        char[] array = s.toCharArray();
+        
+        char[] array = authentication_seal.toCharArray();
 
 
         if(array.length>=8)
@@ -102,15 +109,18 @@ public class GuildController
         
         
     }
+
+    
   
 
 
     @DeleteMapping("/guilds/{id}")
-    public ResponseEntity<?> deleteGuild(@PathVariable Integer id, @RequestBody Guild entity)
+    public ResponseEntity<?> deleteGuild(@PathVariable Integer id)
     {
         Optional<Guild> op= gRepo.findById(id);
         if(op.isPresent())
         {
+            gRepo.deleteById(id);
             return new ResponseEntity<String>("", HttpStatus.OK);
         }
         else 
