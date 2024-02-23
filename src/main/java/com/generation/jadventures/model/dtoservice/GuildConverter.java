@@ -55,6 +55,18 @@ public class GuildConverter
                 .authentication_seal(dto.getAuthentication_seal())
                 .build();
     }
+
+    // public Guild dtoLoginToGuild(GuildDtoWLogin dto)
+    // {
+    //     return Guild
+    //             .builder()
+    //             .name(dto.getName())
+    //             .authentication_seal(dto.getAuthentication_seal())
+    //             .build();
+    // }
+
+    
+
     public Guild dtoRBase(GuildRDtoBase dto)
     {
         return Guild

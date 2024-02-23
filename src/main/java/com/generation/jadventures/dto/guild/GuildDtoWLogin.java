@@ -1,4 +1,8 @@
 package com.generation.jadventures.dto.guild;
+import java.util.List;
+
+import com.generation.jadventures.model.entities.Quest;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,4 +17,5 @@ public class GuildDtoWLogin
     
     private String name; 
     private String authentication_seal;
+    List<Quest> posted_quests;
 }
