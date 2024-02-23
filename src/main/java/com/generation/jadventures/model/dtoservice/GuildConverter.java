@@ -47,6 +47,8 @@ public class GuildConverter
                 .build();
     }
 
+    
+
     public Guild dtoRBase(GuildRDtoBase dto)
     {
         return Guild
