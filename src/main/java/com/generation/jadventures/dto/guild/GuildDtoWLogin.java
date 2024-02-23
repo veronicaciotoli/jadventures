@@ -17,5 +17,4 @@ public class GuildDtoWLogin
     
     private String name; 
     private String authentication_seal;
-    List<Quest> posted_quests;
 }
