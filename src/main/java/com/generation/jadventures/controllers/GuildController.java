@@ -58,11 +58,23 @@ public class GuildController
             return new ResponseEntity<GuildDtoWFull>(gConv.guildToDtoWFull(op.get()), HttpStatus.OK);
 
         else
-            return new ResponseEntity<String>("Credenziali non valide", HttpStatus.UNAUTHORIZED); 
+        return new ResponseEntity<String>("Credenziali non valide", HttpStatus.UNAUTHORIZED); 
         
     }
-
-
+    
+    @PutMapping("/guilds/{id}")
+    public ResponseEntity<?> update(@PathVariable Integer id,@RequestBody Guild entity) 
+    {
+        Optional<Guild> op = gRepo.findLogged(entity.getName(), entity.getAuthentication_seal());
+        if(op.isPresent())
+        {
+            entity.setId(id);
+            return new ResponseEntity<Guild>(gRepo.save(entity),HttpStatus.OK);
+        }
+        else
+            return new ResponseEntity<String>("No guild with id "+id,HttpStatus.NOT_FOUND);
+    }
+    
     public boolean validAuthentication(GuildDtoWLogin dto)
     {
         String s= dto.getAuthentication_seal();
@@ -91,18 +103,6 @@ public class GuildController
         
     }
   
-    @PutMapping("/guilds/{id}")
-    public ResponseEntity<?> update(@PathVariable Integer id,@RequestBody Guild entity) 
-    {
-        Optional<Guild> op = gRepo.findById(id);
-        if(op.isPresent())
-        {
-            entity.setId(id);
-            return new ResponseEntity<Guild>(gRepo.save(entity),HttpStatus.OK);
-        }
-        else
-            return new ResponseEntity<String>("No guild with id "+id,HttpStatus.NOT_FOUND);
-    }
 
 
     @DeleteMapping("/guilds/{id}")
