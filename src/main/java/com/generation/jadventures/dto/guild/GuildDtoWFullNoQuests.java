@@ -13,5 +13,5 @@ import lombok.experimental.SuperBuilder;
 public class GuildDtoWFullNoQuests extends GuildRDtoBase
 {
     private Integer id; 
-    private List<Quest> posted_quests; 
+   
 }
