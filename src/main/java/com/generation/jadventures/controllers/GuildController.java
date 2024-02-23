@@ -53,9 +53,9 @@ public class GuildController
     @PostMapping("/guilds/login")
     public ResponseEntity <?> login(@RequestBody GuildDtoWLogin dto)
     {
-        Optional<Guild> op= gRepo.findByNameAndAuthentication_seal(dto.getName(), dto.getAuthentication_seal());
+        Optional<Guild> op= gRepo.findLogged(dto.getName(), dto.getAuthentication_seal());
         if(op.isPresent())
-            return new ResponseEntity<GuildDtoWFullNoQuests>(gConv.guildToDtoWFullNoQuests(op.get()), HttpStatus.OK);
+            return new ResponseEntity<GuildDtoWFull>(gConv.guildToDtoWFull(op.get()), HttpStatus.OK);
 
         else
             return new ResponseEntity<String>("Credenziali non valide", HttpStatus.UNAUTHORIZED); 
