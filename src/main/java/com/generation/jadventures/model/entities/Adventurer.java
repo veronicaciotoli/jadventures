@@ -17,46 +17,27 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
-public class Quest 
+public class Adventurer 
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id; 
-    private LocalDate date_created; 
-    private String status;
+    private String name, surname; 
+    private LocalDate dob; 
     @Column(name="`rank`")
-    private String rank; 
-    private int reward;
-    private String area; 
-    private LocalDate date_completed;
-    private String map_url, description, type; 
-    
-
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "patron_id")
-    private Guild patron;
+    private String rank;
+    private String role; 
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "party_id")
-    private Party partyQuest;
-    
-
-
-
-
-    
-    
-
-
-    
+    private Party party; 
 
 
 }

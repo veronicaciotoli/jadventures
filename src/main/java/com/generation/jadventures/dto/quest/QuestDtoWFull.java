@@ -1,7 +1,5 @@
 package com.generation.jadventures.dto.quest;
 
-import java.time.LocalDate;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,10 +9,8 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class QuestDtoBase 
+public class QuestDtoWFull extends QuestDtoBase
 {
-    private LocalDate date_created, date_completed;
-    private String status, rank, area, map_url, description, type;
-    private int reward;
-
+    private Integer id;
+    
 }

@@ -1,7 +1,4 @@
-package com.generation.jadventures.dto.guild;
-import java.util.List;
-
-import com.generation.jadventures.model.entities.Quest;
+package com.generation.jadventures.dto.party;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,9 +9,8 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class GuildDtoWLogin 
+public class PartyDtoWLogin 
 {
-    
     private String name; 
     private String authentication_seal;
 }

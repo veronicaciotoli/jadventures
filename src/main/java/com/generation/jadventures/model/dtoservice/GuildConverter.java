@@ -1,6 +1,7 @@
 package com.generation.jadventures.model.dtoservice;
 import org.springframework.stereotype.Service;
 
+import com.generation.jadventures.dto.guild.GuildDtoRput;
 import com.generation.jadventures.dto.guild.GuildDtoWFull;
 import com.generation.jadventures.dto.guild.GuildDtoWFullNoQuests;
 import com.generation.jadventures.dto.guild.GuildDtoWLogin;
@@ -47,6 +48,29 @@ public class GuildConverter
                 .build();
     }
 
+    public Guild dtoLoginToGuild(GuildDtoWLogin dto)
+    {
+        return Guild
+                .builder()
+                .name(dto.getName())
+                .authentication_seal(dto.getAuthentication_seal())
+                .build();
+    }
+
+    public Guild dtoRPut(GuildDtoRput dto)
+    {
+        return Guild
+                .builder()
+                .id(dto.getId())
+                .name(dto.getName())
+                .authentication_seal(dto.getAuthentication_seal())
+                .seal_img_url(dto.getSeal_img_url())
+                .n_employees(dto.getN_employees())
+                .hq_address(dto.getHq_address())
+                .build();
+    }
+
+
     public Guild dtoRBase(GuildRDtoBase dto)
     {
         return Guild
@@ -55,6 +79,17 @@ public class GuildConverter
                 .seal_img_url(dto.getSeal_img_url())
                 .n_employees(dto.getN_employees())
                 .hq_address(dto.getHq_address())
+                .build(); 
+    }
+
+    public GuildRDtoBase guildtoDtoBase (Guild e)
+    {
+        return GuildRDtoBase
+                .builder()
+                .name(e.getName())
+                .seal_img_url(e.getSeal_img_url())
+                .n_employees(e.getN_employees())
+                .hq_address(e.getHq_address())
                 .build(); 
     }
 
