@@ -13,16 +13,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 
 import com.generation.jadventures.dto.quest.QuestDtoWFull;
 import com.generation.jadventures.dto.quest.QuestDtoWFullWithPadron;
 import com.generation.jadventures.model.dtoservice.QuestConverter;
 import com.generation.jadventures.model.entities.Guild;
+import com.generation.jadventures.model.entities.Party;
 import com.generation.jadventures.model.entities.Quest;
 import com.generation.jadventures.model.repositories.GuildRepository;
+import com.generation.jadventures.model.repositories.PartyRepository;
 import com.generation.jadventures.model.repositories.QuestRepository;
 
 @RestController
@@ -36,6 +38,9 @@ public class QuestController
 
     @Autowired
     GuildRepository gRepo;
+
+    @Autowired
+    PartyRepository pRepo;
 
     @GetMapping("/quests")
     public List<QuestDtoWFull> getAllNoPadron()
@@ -132,6 +137,23 @@ public class QuestController
             return new ResponseEntity<Quest>(repo.save(entity),HttpStatus.OK);
 
 
+    }
+
+    @PutMapping("/quests/accepting/{id}/{party_id}")
+    public ResponseEntity<?> accept(@PathVariable Integer id, @PathVariable Integer party_id){
+        Optional<Quest> op = repo.findById(id);
+        if(op.isPresent()){
+            Optional<Party> opp = pRepo.findById(party_id);
+            if(opp.isPresent()){
+                Quest q = op.get();
+                q.setStatus("PENDING");
+                q.setPartyQuest(opp.get());
+                return new ResponseEntity<Quest>(repo.save(q),HttpStatus.OK);
+            }
+            return new ResponseEntity<String>("No party with id "+party_id,HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<String>("No quest with id "+id,HttpStatus.NOT_FOUND);
+        
     }
 
      @DeleteMapping("/quests/{id}")

@@ -61,7 +61,7 @@ public class Party
             }
         }
 
-        return  charforInt(sum/adventurers.size());
+        return charforInt(sum/adventurers.size());
     }
 
     public String charforInt(int numb)
@@ -70,8 +70,8 @@ public class Party
         switch (numb) 
         {
             case 5:
-                return "S";
-
+                return "S";    
+                
             case 4:
 
                 return "A";
@@ -84,12 +84,11 @@ public class Party
             case 1:
 
                 return "D";
-
+    
             default:
                 return "D";
         }
     }
-
 
     public int intforChar(String rank)
     {
@@ -115,7 +114,7 @@ public class Party
                 return 1;
     
             default:
-                return -1;
+                return 1;
         }
     }
 }
