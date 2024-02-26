@@ -41,20 +41,54 @@ public class Party
     @OneToMany(mappedBy = "partyQuest",fetch = FetchType.EAGER)
     private List<Quest> quests;//1-N
 
-    //Il rank del party viene calcolato come media tra il rank dell'avv più
-    //debole e la media dei rank degli altri 3
-    // private String getRank()
-    // {
-    //     if (adventurers == null || adventurers.size() < 4) 
-    //     {
-    //         return "NON DISPONIBILE";
-    //     }
+    // Il rank del party viene calcolato come media tra il rank dell'avv più
+    // debole e la media dei rank degli altri 3
+    private String getRank()
+    {
+        int sum = 0;
+        if (adventurers == null || adventurers.size() < 4) 
+        {
+            return "NON DISPONIBILE";
+        }
+        else
+        {
+            for(Adventurer a: adventurers)
+            {
+                String rank=a.getRank();
+                int numericRank= intforChar(rank);
+                System.out.println(numericRank);
+                sum+=numericRank; 
+            }
+        }
 
-    //     double sommaDeiRank = adventurers.stream()
-    //                                     .filter(avventuriero -> !avventuriero.equals(party_leader))
-                                        
-    //                 .sum();
+        return "Il rank medio del party è "+sum/adventurers.size();
+    }
+
+    public int intforChar(String rank)
+    {
+        String ranks = "";
 
 
-    // }
+        switch (ranks) 
+        {
+            case "S":
+                return 5;    
+                
+            case "A":
+
+                return 4;
+            case "B":
+
+                return 3;
+            case "C":
+
+                return 2;
+            case "D":
+
+                return 1;
+    
+            default:
+                return -1;
+        }
+    }
 }
