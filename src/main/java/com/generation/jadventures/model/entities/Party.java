@@ -61,8 +61,35 @@ public class Party
             }
         }
 
-        return "Il rank medio del party è "+sum/adventurers.size();
+        return  charforInt(sum/adventurers.size());
     }
+
+    public String charforInt(int numb)
+    {
+
+        switch (numb) 
+        {
+            case 5:
+                return "S";
+
+            case 4:
+
+                return "A";
+            case 3:
+
+                return "B";
+            case 2:
+
+                return "C";
+            case 1:
+
+                return "D";
+
+            default:
+                return "D";
+        }
+    }
+
 
     public int intforChar(String rank)
     {
