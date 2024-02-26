@@ -156,6 +156,40 @@ public class QuestController
         
     }
 
+    @PutMapping("quests/succeding/{id}/{party_id}")
+    public ResponseEntity<?> acceptSuccess(@PathVariable Integer id, @PathVariable Integer party_id){
+        Optional<Quest> op = repo.findById(id);
+        if(op.isPresent()){
+            Optional<Party> opp = pRepo.findById(party_id);
+            if(opp.isPresent()){
+                Quest q = op.get();
+                q.setStatus("SUCCESS");
+                q.setPartyQuest(opp.get());
+                return new ResponseEntity<Quest>(repo.save(q),HttpStatus.OK);
+            }
+            return new ResponseEntity<String>("No party with id "+party_id,HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<String>("No quest with id "+id,HttpStatus.NOT_FOUND);
+        
+    }
+
+    @PutMapping("/quests/failing/{id}/{party_id}" )
+    public ResponseEntity<?> acceptFailed(@PathVariable Integer id, @PathVariable Integer party_id){
+        Optional<Quest> op = repo.findById(id);
+        if(op.isPresent()){
+            Optional<Party> opp = pRepo.findById(party_id);
+            if(opp.isPresent()){
+                Quest q = op.get();
+                q.setStatus("FAILED");
+                q.setPartyQuest(opp.get());
+                return new ResponseEntity<Quest>(repo.save(q),HttpStatus.OK);
+            }
+            return new ResponseEntity<String>("No party with id "+party_id,HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<String>("No quest with id "+id,HttpStatus.NOT_FOUND);
+        
+    }
+
      @DeleteMapping("/quests/{id}")
     public ResponseEntity<?> delete(@PathVariable Integer id) 
     {
