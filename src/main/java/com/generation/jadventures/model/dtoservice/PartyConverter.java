@@ -1,5 +1,6 @@
 package com.generation.jadventures.model.dtoservice;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.generation.jadventures.dto.party.PartyDtoWFull;
@@ -9,6 +10,7 @@ import com.generation.jadventures.model.entities.Party;
 @Service
 public class PartyConverter 
 {
+    
     public PartyDtoWFull partyDtoWFull (Party p)
     {
         return PartyDtoWFull
@@ -44,6 +46,26 @@ public class PartyConverter
                 .name(dto.getName())
                 .authentication_seal(dto.getAuthentication_seal())
                 .build();
+    }
+
+    public PartyDtoWFull dtoWFulltoPartyAug (Party e)
+    {
+        return  PartyDtoWFull
+                .builder()
+                .id(e.getId())
+                .name(e.getName())
+                .authentication_seal(e.getAuthentication_seal())
+                .motto(e.getMotto())
+                .party_leader(e.getParty_leader())
+                .quests(e.getQuests())
+                .evaluateRank(calcEvalRank(e))
+                .adventurers(e.getAdventurers())
+                .build();
+    }
+
+    public String calcEvalRank(Party e)
+    {
+        return e.evaluateRank();
     }
 
 }
