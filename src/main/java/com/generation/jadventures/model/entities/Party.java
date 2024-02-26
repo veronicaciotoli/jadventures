@@ -43,10 +43,10 @@ public class Party
 
     // Il rank del party viene calcolato come media tra il rank dell'avv più
     // debole e la media dei rank degli altri 3
-    private String getRank()
+    public String evaluateRank()
     {
         int sum = 0;
-        if (adventurers == null || adventurers.size() < 4) 
+        if (adventurers == null || adventurers.size() > 4) 
         {
             return "NON DISPONIBILE";
         }

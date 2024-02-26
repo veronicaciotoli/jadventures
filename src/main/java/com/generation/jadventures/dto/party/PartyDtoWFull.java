@@ -3,6 +3,7 @@ package com.generation.jadventures.dto.party;
 import java.util.List;
 
 import com.generation.jadventures.model.entities.Adventurer;
+import com.generation.jadventures.model.entities.Party;
 import com.generation.jadventures.model.entities.Quest;
 
 import lombok.AllArgsConstructor;
@@ -21,4 +22,5 @@ public class PartyDtoWFull
     private Adventurer party_leader;
     private List<Quest> quests;
     private List<Adventurer> adventurers;
+    private String evaluateRank;
 }
