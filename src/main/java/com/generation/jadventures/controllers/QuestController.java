@@ -190,7 +190,7 @@ public class QuestController
         
     }
 
-     @DeleteMapping("/quests/{id}")
+    @DeleteMapping("/quests/{id}")
     public ResponseEntity<?> delete(@PathVariable Integer id) 
     {
         Optional<Quest> op = repo.findById(id);
