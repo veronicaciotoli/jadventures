@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -29,6 +30,7 @@ public class Adventurer
     private Integer id; 
     private String name, surname; 
     private LocalDate dob; 
+    @Column(name="`rank`")
     private String rank;
     private String role; 
 
